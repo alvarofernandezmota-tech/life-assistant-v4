@@ -1,152 +1,320 @@
-# 🌊 Life Assistant V4 - La Barca de Caronte
+# 🌊 Life Assistant V4 - Sistema Caronte
 
-> Sistema de productividad gamificado con mecánicas RPG inspiradas en la mitología griega
+> Sistema de gestión de vida gamificado con mecánicas RPG inspiradas en mitología griega.
 
-## 📋 Descripción
+**Versión:** 1.5.0  
+**Estado:** ✅ Backend funcional | 🚧 Frontend básico | 🔜 Bot Telegram  
+**Fecha:** 8 Marzo 2026
 
-Life Assistant V4 es un asistente personal completo que combina gestión de hábitos, tareas y eventos con un sistema de gamificación basado en el mito de Caronte, el barquero del río Estigia.
+---
 
-### ✨ Características principales
+## 🎯 ¿Qué es Life Assistant V4?
 
-- 📱 **Interfaz Web Completa**: Dashboard visual con gestión CRUD de hábitos, tareas y eventos
-- 🤖 **Bot de Telegram**: Control total desde tu móvil con interfaz conversacional
-- 🎮 **Sistema RPG**: XP, niveles, Wyrd (vida), monedas y artefactos míticos
-- 🎲 **Sistema de Dados**: Mecánicas D&D integradas con tareas y hábitos
-- 🗄️ **Base de Datos Robusta**: SQLite con SQLAlchemy (20+ tablas)
-- 🔔 **Recordatorios Automáticos**: Notificaciones inteligentes
-- 🤖 **IA Integrada**: Chat con Caronte usando OpenAI
+Un asistente personal que gamifica tu productividad usando mecánicas RPG:
 
-## 🏗️ Arquitectura
+- 📝 **Gestión de tareas** con sistema de recompensas
+- 🔄 **Tracking de hábitos** con rachas y logros
+- 📅 **Calendario de eventos** integrado
+- ⚡ **Sistema RPG Caronte** - Gana XP, sube de nivel, compra artefactos
+- 🤖 **Chat IA** con contexto de tu vida (Groq LLM)
+- 🚣 **Bot Telegram** (próximamente)
 
-```
-life-assistant-v4/
-├── src/                    # Código fuente
-│   ├── core/              # Core: Database, Models, Dice System
-│   ├── services/          # Lógica de negocio (CRUD)
-│   ├── api/               # FastAPI REST API
-│   ├── bot/               # Telegram Bot
-│   └── config/            # Configuración centralizada
-├── static/                # Frontend: CSS, JS
-├── templates/             # HTML Templates
-├── tests/                 # Tests unitarios
-└── docs/                  # Documentación
-```
+---
+
+## ✅ Estado Actual
+
+### Backend API ✅
+- FastAPI REST API completamente funcional
+- Base de datos SQLite con SQLAlchemy ORM
+- Sistema RPG completo (niveles, XP, oro, artefactos)
+- CRUD completo para tareas, hábitos y eventos
+- Chat IA integrado con Groq
+- Sistema de Indulgencias (perdones por malos hábitos)
+- Caronte Dice System (dados mitológicos)
+
+### Frontend 🚧
+- Dashboard HTML básico funcional
+- Interfaz conectada a API
+- Vista de tareas, hábitos y eventos
+- Stats RPG en tiempo real
+- Próximamente: Calendario avanzado (FullCalendar)
+
+### Bot Telegram 🔜
+- En desarrollo
+- Comandos básicos planificados
+- Notificaciones automáticas
+
+---
 
 ## 🚀 Quick Start
 
 ### Requisitos
-
 - Python 3.10+
-- SQLite3
-- Cuenta OpenAI API (opcional)
-- Bot Token Telegram (opcional)
+- SQLite (incluido)
+- Git
 
 ### Instalación
 
 ```bash
-# Clonar repositorio
-git clone https://github.com/alvarofernandezmota-tech/personal.git
-cd personal/03_proyectos/life-assistant-v4
+# 1. Clonar repositorio
+git clone https://github.com/alvarofernandezmota-tech/life-assistant-v4.git
+cd life-assistant-v4
 
-# Crear entorno virtual
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+# 2. Crear entorno virtual
+python3 -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+# .venv\Scripts\activate   # Windows
 
-# Instalar dependencias
-pip install -r requirements.txt
+# 3. Instalar dependencias core
+pip install sqlalchemy alembic fastapi uvicorn[standard] python-dotenv groq pydantic pydantic-settings httpx python-multipart
 
-# Configurar variables de entorno
+# 4. Crear archivo .env
 cp .env.example .env
-# Editar .env con tus credenciales
+# Editar .env y añadir tu GROQ_API_KEY
 
-# Iniciar base de datos
-python -c "from src.core.database import Base, engine; Base.metadata.create_all(engine)"
+# 5. Inicializar base de datos
+python init_db.py
 
-# Iniciar aplicación web
-cd src/api && python main.py
-# Abrir: http://localhost:8000
-
-# Iniciar bot Telegram (terminal separada)
-cd src/bot && python main.py
+# 6. Lanzar API
+python run.py
 ```
 
-## 📊 Estado del Proyecto
-
-### ✅ Completado (V3 migrado)
-
-- [x] Base de datos completa (20+ tablas)
-- [x] CRUD Hábitos (9/10)
-- [x] CRUD Tareas (9/10)
-- [x] CRUD Eventos (9/10)
-- [x] Services layer bien estructurado
-- [x] Sistema de dados completo
-- [x] Documentación técnica
-
-### 🚧 En desarrollo (V4)
-
-- [ ] Frontend web completo (HTML + CSS + JS)
-- [ ] API REST con routers modulares
-- [ ] Bot Telegram refactorizado
-- [ ] Sistema RPG integrado
-- [ ] Tests unitarios
-- [ ] CI/CD con GitHub Actions
-
-### 📅 Roadmap
-
-Ver [ROADMAP.md](ROADMAP.md) para el plan detallado de desarrollo.
-
-## 🎮 Sistema RPG - La Barca de Caronte
-
-### Concepto
-
-Cada día eres Caronte, el barquero que transporta almas por el río Estigia. Tus hábitos y tareas son almas que debes embarcar antes del anochecer.
-
-### Mecánicas principales
-
-- **XP y Niveles**: Gana experiencia completando hábitos y tareas
-- **Wyrd (0-100)**: Tu destino/vida. Pierde Wyrd con malos hábitos
-- **Monedas**: 4 tipos (óbolos, dracmas, tetradracmas, decadracmas)
-- **La Barca**: Tiene integridad que debes mantener
-- **Artefactos**: 10 ítems míticos comprables (Lira de Orfeo, Égida de Atenea, etc.)
-- **Tributo a Hades**: Pago semanal obligatorio
-- **Sistema de Dados**: Tiradas para desafíos y eventos especiales
-
-Ver [docs/CARONTE-SPEC.md](docs/CARONTE-SPEC.md) para detalles completos.
-
-## 🧪 Testing
-
-```bash
-# Ejecutar todos los tests
-pytest
-
-# Tests con coverage
-pytest --cov=src tests/
-
-# Tests específicos
-pytest tests/test_crud.py
-```
-
-## 📚 Documentación
-
-- [CARONTE-SPEC.md](docs/CARONTE-SPEC.md) - Especificación completa sistema RPG
-- [DICE-SYSTEM-SPEC.md](docs/DICE-SYSTEM-SPEC.md) - Sistema de dados
-- [API.md](docs/API.md) - Documentación API REST
-- [ROADMAP.md](ROADMAP.md) - Plan de desarrollo
-
-## 🤝 Contribuir
-
-Este es un proyecto personal, pero las sugerencias son bienvenidas.
-
-## 📝 Licencia
-
-MIT License - Álvaro Fernández Mota © 2026
-
-## 🔗 Links
-
-- **Portfolio**: [alvarofernandezmota.dev](https://alvarofernandezmota.dev)
-- **GitHub**: [@alvarofernandezmota-tech](https://github.com/alvarofernandezmota-tech)
-- **LinkedIn**: [Álvaro Fernández Mota](https://linkedin.com/in/alvarofernandezmota)
+**API disponible en:** http://localhost:8000/docs  
+**Frontend:** Abrir `frontend/index.html` en navegador
 
 ---
 
-**Hecho con ❤️ y ☕ en Madrid, España 🇪🇸**
+## 📚 Documentación
+
+- **[QUICKSTART.md](QUICKSTART.md)** - Guía de inicio rápido detallada
+- **[STATUS.md](STATUS.md)** - Estado actual del proyecto
+- **[TODO.md](TODO.md)** - Tareas pendientes
+- **[ROADMAP.md](ROADMAP.md)** - Hoja de ruta
+- **[CHANGELOG.md](CHANGELOG.md)** - Historial de versiones
+- **[BUGS.md](BUGS.md)** - Bugs conocidos
+- **[diary/](diary/)** - Diario de desarrollo
+
+---
+
+## 🎮 Sistema RPG Caronte
+
+### Mecánicas Principales
+
+**XP & Niveles:**
+- Completa tareas → Gana XP
+- Completa hábitos → Gana XP
+- Acumula XP → Sube de nivel
+- Nivel = sqrt(XP / 100)
+
+**Oro (Óbolos):**
+- Moneda del sistema
+- Ganar: Completar tareas/hábitos
+- Gastar: Comprar artefactos, indulgencias
+
+**Artefactos:**
+- 12 artefactos míticos disponibles
+- 3 raridades: Common, Rare, Legendary
+- Bonus: XP, Oro, Protección
+
+**Penalizaciones:**
+- Malos hábitos → Pierde HP y XP
+- HP = 0 → Penalización mayor
+
+**Indulgencias:**
+- Sistema de perdones
+- Prevención: Antes del mal hábito (25 óbolos)
+- Absolución: Después del mal hábito (50 óbolos)
+
+### Recompensas por Dificultad
+
+| Acción | XP | Oro |
+|--------|-----|------|
+| Tarea fácil | +10 | +5 |
+| Tarea media | +20 | +10 |
+| Tarea difícil | +30 | +15 |
+| Hábito fácil | +10 | +5 |
+| Hábito medio | +15 | +8 |
+| Hábito difícil | +25 | +12 |
+
+---
+
+## 🛠️ Stack Tecnológico
+
+**Backend:**
+- **FastAPI** - Framework web moderno y rápido
+- **SQLAlchemy** - ORM para base de datos
+- **SQLite** - Base de datos embebida
+- **Groq** - LLM para chat IA (llama-3.3-70b-versatile)
+- **Pydantic** - Validación de datos
+- **Alembic** - Migraciones de BD
+
+**Frontend:**
+- **HTML5 + Vanilla JS** - Sin frameworks pesados
+- **Tailwind CSS** - Diseño responsive
+- **Fetch API** - Comunicación con backend
+
+**DevOps:**
+- **Git/GitHub** - Control de versiones
+- **WSL2** - Desarrollo en Ubuntu sobre Windows
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
+life-assistant-v4/
+├── src/
+│   ├── api/                    # FastAPI application
+│   │   ├── main.py            # Entry point
+│   │   └── routers/           # Endpoints
+│   │       ├── tasks.py       # CRUD tareas
+│   │       ├── habits.py      # CRUD hábitos
+│   │       ├── events.py      # CRUD eventos
+│   │       ├── rpg.py         # Sistema RPG
+│   │       └── chat.py        # Chat IA
+│   ├── core/                   # Core logic
+│   │   ├── database.py        # SQLAlchemy setup
+│   │   ├── models.py          # DB models
+│   │   └── rpg_models.py      # RPG specific models
+│   ├── services/               # Business logic
+│   │   ├── rpg.py             # RPG calculations
+│   │   └── caronte_dice.py    # Dice system
+│   └── config/
+│       └── settings.py        # Configuration
+├── frontend/
+│   └── index.html             # Dashboard web
+├── data/
+│   └── life.db                # SQLite database
+├── init_db.py                 # Database initializer
+├── run.py                     # Application launcher
+├── requirements.txt
+└── docs/                      # Documentation
+```
+
+---
+
+## 🌐 API Endpoints
+
+### Tareas
+- `GET /tasks/` - Listar tareas
+- `POST /tasks/` - Crear tarea
+- `GET /tasks/{id}` - Ver tarea
+- `PUT /tasks/{id}` - Actualizar tarea
+- `DELETE /tasks/{id}` - Eliminar tarea
+- `POST /tasks/{id}/complete` - Completar tarea
+- `POST /tasks/{id}/uncomplete` - Descompletar tarea
+- `GET /tasks/stats/today` - Estadísticas del día
+- `GET /tasks/overdue` - Tareas vencidas
+
+### Hábitos
+- `GET /habits/` - Listar hábitos
+- `POST /habits/` - Crear hábito
+- `GET /habits/{id}` - Ver hábito
+- `PUT /habits/{id}` - Actualizar hábito
+- `DELETE /habits/{id}` - Eliminar hábito
+- `POST /habits/{id}/complete` - Completar hábito
+- `GET /habits/{id}/logs` - Historial de completados
+- `GET /habits/stats/today` - Estadísticas del día
+
+### Eventos
+- `GET /events/` - Listar eventos
+- `POST /events/` - Crear evento
+- `GET /events/{id}` - Ver evento
+- `PUT /events/{id}` - Actualizar evento
+- `DELETE /events/{id}` - Eliminar evento
+- `GET /events/calendar/month` - Vista mensual
+- `GET /events/upcoming` - Próximos eventos
+
+### RPG
+- `GET /rpg/profile` - Ver perfil completo
+- `POST /rpg/end-of-day` - Calcular día
+- `POST /rpg/bad-habit` - Registrar mal hábito
+- `GET /rpg/indulgencia/coste` - Ver costes
+- `POST /rpg/indulgencia/prevencion` - Comprar prevención
+- `POST /rpg/indulgencia/absolucion` - Comprar absolución
+- `POST /rpg/indulgencia/usar` - Usar indulgencia
+- `GET /rpg/market` - Ver artefactos disponibles
+- `GET /rpg/artifacts` - Ver inventario
+
+### Chat
+- `POST /chat/message` - Enviar mensaje
+- `GET /chat/history` - Ver historial
+- `DELETE /chat/history` - Limpiar historial
+- `GET /chat/status` - Estado del sistema
+
+**Documentación completa:** http://localhost:8000/docs
+
+---
+
+## 🎯 Roadmap
+
+### ✅ Fase 1: Backend Core (COMPLETADO)
+- [x] API REST con FastAPI
+- [x] Base de datos SQLite
+- [x] Modelos de datos
+- [x] CRUD completo
+- [x] Sistema RPG básico
+
+### ✅ Fase 1.5: Fixes & Mejoras (COMPLETADO - 8 Mar 2026)
+- [x] Fix bugs críticos
+- [x] Sistema Caronte Dice
+- [x] Indulgencias
+- [x] Artefactos míticos
+- [x] Chat IA integrado
+- [x] Dashboard HTML funcional
+
+### 🚧 Fase 2: Frontend (EN CURSO)
+- [x] Dashboard HTML básico
+- [ ] Calendario avanzado (FullCalendar)
+- [ ] Gráficos de estadísticas
+- [ ] Tema mitológico completo
+- [ ] Animaciones y transiciones
+
+### 🔜 Fase 3: Bot Telegram
+- [ ] Comandos básicos
+- [ ] Notificaciones automáticas
+- [ ] Gestión desde móvil
+
+### 🔜 Fase 4: Avanzado
+- [ ] Sincronización Google Calendar
+- [ ] Sistema de logros
+- [ ] Modo multijugador
+- [ ] App móvil nativa
+
+---
+
+## 🌊 Mitología Caronte
+
+El sistema está inspirado en la mitología griega del barquero Caronte:
+
+- **🚣 Caronte** - Barquero del Estigio (Bot Telegram)
+- **🪙 Óbolos** - Monedas para pagar el pasaje
+- **⚡ Olimpo** - Sistema de niveles divinos
+- **⚔️ Trabajos de Hércules** - Tareas épicas
+- **🔄 Rituales Divinos** - Hábitos diarios
+- **🏺 Río Estigio** - Eventos temporales
+- **⚡ Ira de Zeus** - Penalizaciones
+- **🔱 Indulgencias de Poseidón** - Sistema de perdones
+
+---
+
+## 🐛 Bugs Conocidos
+
+Ver [BUGS.md](BUGS.md) para lista completa.
+
+---
+
+## 📄 Licencia
+
+MIT License - Proyecto personal
+
+---
+
+## 👤 Autor
+
+**Álvaro Fernández Mota**  
+🐙 GitHub: [@alvarofernandezmota-tech](https://github.com/alvarofernandezmota-tech)
+
+---
+
+**Hecho con ⚡ y mucha mitología griega**
