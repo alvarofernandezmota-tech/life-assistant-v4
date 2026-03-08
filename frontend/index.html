@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Assistant - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">🏠 Life Assistant</h1>
+            <p class="text-gray-600 mt-2">Dashboard Principal</p>
+        </div>
+
+        <!-- RPG Stats -->
+        <div class="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg shadow-md p-6 mb-6 text-white">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-xl font-bold">⚡ Tu Progreso</h2>
+                    <p class="text-sm opacity-90">Cargando...</p>
+                </div>
+                <div id="rpg-stats" class="text-right">
+                    <div class="text-2xl font-bold">Nivel <span id="level">-</span></div>
+                    <div class="text-sm"><span id="xp">-</span> XP | 🪙 <span id="gold">-</span> Oro</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            
+            <!-- TAREAS -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-gray-800">✅ Tareas</h2>
+                    <button onclick="showAddTask()" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm">
+                        + Nueva
+                    </button>
+                </div>
+                <div id="tasks-list" class="space-y-2">
+                    <p class="text-gray-500 text-sm">Cargando tareas...</p>
+                </div>
+            </div>
+
+            <!-- HÁBITOS -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-gray-800">🔄 Hábitos</h2>
+                    <button onclick="showAddHabit()" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm">
+                        + Nuevo
+                    </button>
+                </div>
+                <div id="habits-list" class="space-y-2">
+                    <p class="text-gray-500 text-sm">Cargando hábitos...</p>
+                </div>
+            </div>
+
+            <!-- EVENTOS -->
+            <div class="bg-white rounded-lg shadow-md p-6 md:col-span-2">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-gray-800">📅 Eventos de Hoy</h2>
+                    <button onclick="showAddEvent()" class="bg-purple-500 text-white px-3 py-1 rounded hover:bg-purple-600 text-sm">
+                        + Nuevo
+                    </button>
+                </div>
+                <div id="events-list" class="space-y-2">
+                    <p class="text-gray-500 text-sm">Cargando eventos...</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000';
+
+        // Cargar datos al iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRPGStats();
+            loadTasks();
+            loadHabits();
+            loadEvents();
+        });
+
+        // === RPG STATS ===
+        async function loadRPGStats() {
+            try {
+                const res = await fetch(`${API_URL}/rpg/profile`);
+                const data = await res.json();
+                document.getElementById('level').textContent = data.level;
+                document.getElementById('xp').textContent = data.xp;
+                document.getElementById('gold').textContent = data.gold;
+            } catch (error) {
+                console.error('Error loading RPG stats:', error);
+            }
+        }
+
+        // === TAREAS ===
+        async function loadTasks() {
+            try {
+                const res = await fetch(`${API_URL}/tasks/`);
+                const tasks = await res.json();
+                
+                const tasksList = document.getElementById('tasks-list');
+                if (tasks.length === 0) {
+                    tasksList.innerHTML = '<p class="text-gray-500 text-sm">No hay tareas</p>';
+                    return;
+                }
+                
+                tasksList.innerHTML = tasks.map(task => `
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded hover:bg-gray-100">
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" 
+                                   ${task.completed ? 'checked' : ''} 
+                                   onchange="toggleTask(${task.id}, this.checked)"
+                                   class="w-5 h-5">
+                            <span class="${task.completed ? 'line-through text-gray-400' : 'text-gray-800'}">
+                                ${task.title}
+                            </span>
+                        </div>
+                        <span class="text-xs text-gray-500">${task.priority || 'normal'}</span>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading tasks:', error);
+            }
+        }
+
+        async function toggleTask(taskId, completed) {
+            try {
+                if (completed) {
+                    await fetch(`${API_URL}/tasks/${taskId}/complete`, { method: 'POST' });
+                } else {
+                    await fetch(`${API_URL}/tasks/${taskId}/uncomplete`, { method: 'POST' });
+                }
+                loadTasks();
+                loadRPGStats(); // Actualizar XP
+            } catch (error) {
+                console.error('Error toggling task:', error);
+            }
+        }
+
+        function showAddTask() {
+            const title = prompt('Nombre de la tarea:');
+            if (title) {
+                createTask(title);
+            }
+        }
+
+        async function createTask(title) {
+            try {
+                await fetch(`${API_URL}/tasks/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        title: title,
+                        description: '',
+                        priority: 'normal'
+                    })
+                });
+                loadTasks();
+            } catch (error) {
+                console.error('Error creating task:', error);
+            }
+        }
+
+        // === HÁBITOS ===
+        async function loadHabits() {
+            try {
+                const res = await fetch(`${API_URL}/habits/`);
+                const habits = await res.json();
+                
+                const habitsList = document.getElementById('habits-list');
+                if (habits.length === 0) {
+                    habitsList.innerHTML = '<p class="text-gray-500 text-sm">No hay hábitos</p>';
+                    return;
+                }
+                
+                habitsList.innerHTML = habits.map(habit => `
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded hover:bg-gray-100">
+                        <div class="flex items-center gap-3">
+                            <button onclick="completeHabit(${habit.id})" 
+                                    class="w-10 h-10 rounded-full bg-green-500 text-white hover:bg-green-600">
+                                ✓
+                            </button>
+                            <div>
+                                <div class="text-gray-800 font-medium">${habit.name}</div>
+                                <div class="text-xs text-gray-500">Racha: ${habit.current_streak || 0} días</div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading habits:', error);
+            }
+        }
+
+        async function completeHabit(habitId) {
+            try {
+                await fetch(`${API_URL}/habits/${habitId}/complete`, { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+                loadHabits();
+                loadRPGStats(); // Actualizar XP
+                alert('¡Hábito completado! +XP');
+            } catch (error) {
+                console.error('Error completing habit:', error);
+            }
+        }
+
+        function showAddHabit() {
+            const name = prompt('Nombre del hábito:');
+            if (name) {
+                createHabit(name);
+            }
+        }
+
+        async function createHabit(name) {
+            try {
+                await fetch(`${API_URL}/habits/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        name: name,
+                        description: '',
+                        frequency: 'daily',
+                        difficulty: 'medium'
+                    })
+                });
+                loadHabits();
+            } catch (error) {
+                console.error('Error creating habit:', error);
+            }
+        }
+
+        // === EVENTOS ===
+        async function loadEvents() {
+            try {
+                const today = new Date().toISOString().split('T')[0];
+                const res = await fetch(`${API_URL}/events/?start_date=${today}&end_date=${today}`);
+                const events = await res.json();
+                
+                const eventsList = document.getElementById('events-list');
+                if (events.length === 0) {
+                    eventsList.innerHTML = '<p class="text-gray-500 text-sm">No hay eventos hoy</p>';
+                    return;
+                }
+                
+                eventsList.innerHTML = events.map(event => `
+                    <div class="p-3 bg-gray-50 rounded hover:bg-gray-100">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="font-medium text-gray-800">${event.title}</div>
+                                <div class="text-sm text-gray-600">${event.description || ''}</div>
+                            </div>
+                            <span class="text-xs text-purple-600 font-medium">${formatTime(event.start_datetime)}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading events:', error);
+            }
+        }
+
+        function formatTime(datetime) {
+            const date = new Date(datetime);
+            return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function showAddEvent() {
+            const title = prompt('Título del evento:');
+            if (title) {
+                const time = prompt('Hora (HH:MM):', '10:00');
+                if (time) {
+                    createEvent(title, time);
+                }
+            }
+        }
+
+        async function createEvent(title, time) {
+            try {
+                const today = new Date().toISOString().split('T')[0];
+                const datetime = `${today}T${time}:00`;
+                
+                await fetch(`${API_URL}/events/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        title: title,
+                        description: '',
+                        start_datetime: datetime,
+                        end_datetime: datetime
+                    })
+                });
+                loadEvents();
+            } catch (error) {
+                console.error('Error creating event:', error);
+            }
+        }
+    </script>
+
+</body>
+</html>
