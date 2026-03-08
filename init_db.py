@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 init_db.py - Inicializa la base de datos con tablas y seed data
-Actualizado 2026-03-07: añadidos artefactos de combos de dados (rarity: rare, legendary)
+Actualizado 2026-03-08: corregidos imports para funcionar desde raíz
 
 Uso:
     python init_db.py
@@ -9,11 +9,13 @@ Uso:
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent / "src"))
+# Añadir raíz del proyecto al path
+project_root = Path(__file__).parent
+sys.path.insert(0, str(project_root))
 
-from core.database import Base, engine, SessionLocal
-from core.models import *
-from core.rpg_models import *
+from src.core.database import Base, engine, SessionLocal
+from src.core.models import *
+from src.core.rpg_models import *
 
 
 def create_tables():
