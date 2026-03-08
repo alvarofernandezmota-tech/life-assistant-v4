@@ -2,6 +2,79 @@
 
 Todos los cambios importantes del proyecto se documentan aquí.
 
+---
+
+## [1.5.0] - 2026-03-08
+
+### 🎉 FASE 1.5 COMPLETA - Bugs Fixed + Dashboard Funcional
+
+#### Añadido
+
+##### Frontend Web
+- ✅ `frontend/index.html`: Dashboard HTML funcional completo
+  - Lista de tareas con checkboxes
+  - Lista de hábitos con botón completar
+  - Lista de eventos del día
+  - Stats RPG en tiempo real (nivel, XP, oro)
+  - Conectado completamente a API
+  - Diseño responsive con Tailwind CSS
+  - Fetch API para comunicación con backend
+
+##### Scripts & Tools
+- ✅ `run.py`: Launcher unificado para Windows/Ubuntu
+  - Configura PYTHONPATH automáticamente
+  - Lanza uvicorn con reload
+  - Compatible con WSL2
+
+##### Documentación
+- ✅ README.md actualizado con frontend info
+- ✅ STATUS.md con estado completo 8 Mar 2026
+- ✅ TODO.md actualizado con nuevas prioridades
+- ✅ QUICKSTART.md con frontend instructions
+- ✅ diary/2026-03-08.md: Sesión de hoy documentada
+
+#### Corregido
+
+##### Bugs Críticos
+- ✅ **ImportError**: `attempted relative import beyond top-level package`
+  - Solución: `run.py` con PYTHONPATH
+  - Afectaba: init_db.py, uvicorn start
+  
+- ✅ **ModuleNotFoundError**: `No module named 'src'`
+  - Solución: sys.path.insert en run.py
+  - Permite ejecutar desde cualquier directorio
+
+- ✅ **Conflicto dependencias**: httpx==0.26.0 vs python-telegram-bot
+  - Solución: Usar httpx~=0.25.2 compatible
+  - requirements.txt no necesario con instalación manual core
+
+##### Bugs Menores
+- ✅ init_db.py ahora importa correctamente desde src
+- ✅ uvicorn command not found: usar python -m uvicorn o run.py
+- ✅ Database path relativo arreglado
+
+#### Cambiado
+
+##### Estructura
+- 🔄 `init_db.py`: Simplificado, imports desde src.core
+- 🔄 Instalación: Ya no requiere requirements.txt completo
+- 🔄 Dependencias core instaladas manualmente
+
+##### Configuración
+- 🔄 Entorno virtual opcional (puede usar Python global)
+- 🔄 API accesible desde Windows en WSL2 (localhost:8000)
+
+#### Desplegado
+
+##### Producción
+- 🚀 Backend desplegado en Ubuntu (WSL2)
+- 🚀 Base de datos inicializada con 12 artefactos
+- 🚀 API corriendo en http://localhost:8000
+- 🚀 Frontend accesible vía navegador
+- 🚀 Tests manuales: ✅ Todos los endpoints funcionan
+
+---
+
 ## [4.0.0] - 2026-03-07
 
 ### 🚀 FASE 1 COMPLETA - Estructura Base (21:00 CET)
@@ -91,38 +164,6 @@ Todos los cambios importantes del proyecto se documentan aquí.
 - Docstrings completos
 - Compatibilidad Python 3.11+
 
-### 📋 Pendiente (FASE 2-6)
-
-#### FASE 2: API Web (6h) - 🔴 SIGUIENTE
-- [ ] `src/api/main.py` con app FastAPI
-- [ ] Routers modulares (habits, tasks, events, rpg, dashboard)
-- [ ] Middleware CORS
-- [ ] Tests de endpoints
-
-#### FASE 3: Frontend Web (12h) - 🔴 PRIORIDAD
-- [ ] HTML dashboard responsive
-- [ ] CSS moderno (Tailwind o custom)
-- [ ] JavaScript fetch API
-- [ ] Vistas CRUD interactivas
-
-#### FASE 4: Bot Telegram (8h)
-- [ ] Migrar handlers desde V3
-- [ ] Separar en módulos
-- [ ] InlineKeyboards mejorados
-- [ ] Tests
-
-#### FASE 5: Sistema RPG (11h)
-- [ ] Refactorizar caronte_engine
-- [ ] Integrar dice_system en combates
-- [ ] Router RPG completo
-- [ ] Frontend RPG con visualizaciones
-
-#### FASE 6: Extras (9h)
-- [ ] Recordatorios automáticos
-- [ ] Diario completo con tags
-- [ ] Mejorar chat IA
-- [ ] Documentación técnica completa
-
 ---
 
 ## [3.0.0] - 2026-02 (Referencia V3)
@@ -147,6 +188,20 @@ Todos los cambios importantes del proyecto se documentan aquí.
 
 ---
 
+## 📅 Próximas Versiones
+
+### [1.6.0] - Próximamente
+- [ ] Calendario FullCalendar.js integrado
+- [ ] Gráficos de estadísticas
+- [ ] Tema mitológico visual completo
+
+### [2.0.0] - Bot Telegram
+- [ ] Bot completo con comandos
+- [ ] Notificaciones push
+- [ ] Gestión desde móvil
+
+---
+
 ## Formato
 
 Este CHANGELOG sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
@@ -160,3 +215,4 @@ y este proyecto usa [Semantic Versioning](https://semver.org/lang/es/).
 - **Eliminado** (`Removed`): Funcionalidades eliminadas
 - **Corregido** (`Fixed`): Corrección de bugs
 - **Seguridad** (`Security`): Vulnerabilidades corregidas
+- **Desplegado** (`Deployed`): Cambios en producción
