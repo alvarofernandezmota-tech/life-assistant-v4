@@ -1,288 +1,227 @@
 # ✅ TODO - Life Assistant V4
 
-**Última actualización:** 07/03/2026 22:15 CET
+**Última actualización:** 8 Marzo 2026, 16:45 CET
 
 ---
 
-## 🔴 PRIORIDAD 1: Bugs Críticos (1-2h)
+## 🔥 PRIORIDAD ALTA (Esta semana)
 
-**Estado:** ⏳ PENDIENTE  
-**Debe completarse antes de:** FASE 2 (API)
+### Frontend
+- [ ] **Calendario FullCalendar.js**
+  - Instalar FullCalendar
+  - Vista mensual interactiva
+  - Click en día → Ver/crear eventos
+  - Drag & drop de eventos
+  - Colores por tipo (tareas/eventos)
+  - **Estimado:** 2-3 horas
 
-### Tareas
+- [ ] **Mejorar Dashboard**
+  - Añadir filtros (completadas/pendientes)
+  - Formularios modales (crear tarea/hábito)
+  - Validación de inputs
+  - Mensajes de error/éxito
+  - **Estimado:** 2 horas
 
-- [ ] **BUG-V4-003:** Normalizar monedas plural→singular (15 min)
-  - Archivo: `src/services/rpg.py`
-  - Añadir diccionario `_NORMALIZE`
-  - Modificar método `add_coins()`
+### Bot Telegram
+- [ ] **Crear bot en BotFather**
+  - Obtener token
+  - Configurar comandos
+  - **Estimado:** 15 min
 
-- [ ] **BUG-V4-004:** Crear modelos ORM logs (20 min)
-  - Archivo: `src/core/rpg_models.py`
-  - Añadir `IndulgenciaLog`
-  - Añadir `DiceRollLog`
-  - Regenerar DB con `python init_db.py`
+- [ ] **Comandos básicos**
+  - `/start` - Bienvenida
+  - `/tareas` - Listar tareas hoy
+  - `/habitos` - Listar hábitos
+  - `/completar <id>` - Completar tarea
+  - `/perfil` - Ver stats RPG
+  - **Estimado:** 3 horas
 
-- [ ] **BUG-V4-001:** Unificar tabla `user_artifacts` (30 min)
-  - Eliminar SQL raw de archivos generados
-  - Usar modelo ORM `UserArtifact`
-  - Verificar `init_db.py` funciona
-
-- [ ] **BUG-V4-002:** Reescribir imports `gamification` (45 min)
-  - Archivo: `dice_system.py` (si existe)
-  - Reemplazar por `RPGService`
-  - Actualizar todas las llamadas
-  - Testear sistema de dados
-
-**Tiempo total estimado:** 1h 50min
-
----
-
-## 🟡 PRIORIDAD 2: Issues Medios (2-3h)
-
-**Estado:** ⏳ PENDIENTE  
-**Puede hacerse después de:** Bugs críticos
-
-### Tareas
-
-- [ ] **ISSUE-V4-005:** Añadir columna `indulgencias` (10 min)
-  - Archivo: `src/core/rpg_models.py`
-  - Añadir: `indulgencias = Column(Integer, default=0)`
-  - Configurar Alembic para migración
-
-- [ ] **ISSUE-V4-004:** Renombrar `dice_system.py` Caronte (10 min)
-  - Mover a: `src/services/caronte_dice.py`
-  - Actualizar imports
-
-- [ ] **ISSUE-V4-002:** Alinear fórmula de nivel (20 min)
-  - Archivo: `src/services/rpg.py`
-  - Usar tabla `LEVEL_XP` en vez de sqrt
-  - Testear subidas de nivel
-
-- [ ] **ISSUE-V4-003:** Unificar `BadHabitLog` (30 min)
-  - Decidir tabla única
-  - Añadir columna `source` (web/telegram/auto)
-  - Migrar datos existentes
-
-- [ ] **ISSUE-V4-001:** Consolidar RPG Services (1h)
-  - Decidir: usar solo `src/services/rpg.py`
-  - Migrar métodos útiles de `rpg_service_new.py`
-  - Eliminar archivos duplicados
-  - Actualizar imports en todo el proyecto
-
-**Tiempo total estimado:** 2h 10min
+- [ ] **Notificaciones**
+  - Recordatorio diario de hábitos
+  - Alerta de tareas vencidas
+  - **Estimado:** 2 horas
 
 ---
 
-## 🚀 PRIORIDAD 3: FASE 2 - API REST (3-4h)
+## 🟡 PRIORIDAD MEDIA (Próximas 2 semanas)
 
-**Estado:** ⏳ PENDIENTE  
-**Debe completarse antes de:** FASE 3 (Frontend)
+### Frontend Avanzado
+- [ ] Gráficos de estadísticas
+  - Chart.js o Recharts
+  - XP ganado por día
+  - Hábitos completados (últimos 30 días)
+  - Productividad semanal
 
-### Estructura Base
+- [ ] Tema mitológico visual
+  - Paleta de colores Caronte
+  - Iconos personalizados
+  - Animaciones de nivel up
+  - Efectos de artefactos
 
-- [ ] Crear `src/api/main.py` con FastAPI app (30 min)
-  - Inicializar FastAPI
-  - Configurar CORS
-  - Configurar Swagger UI
-  - Dependency injection DB
+- [ ] Modo oscuro/claro
+  - Toggle en header
+  - Persistir en localStorage
 
-### Routers
+### Sistema RPG
+- [ ] **Página RPG completa**
+  - Vista de inventario visual
+  - Marketplace de artefactos
+  - Historial de XP
+  - Sistema de achievements
 
-- [ ] `src/api/routers/habits.py` (45 min)
-  - GET `/habits` - Lista
-  - GET `/habits/{id}` - Detalle
-  - POST `/habits` - Crear
-  - PUT `/habits/{id}` - Actualizar
-  - DELETE `/habits/{id}` - Eliminar
-  - POST `/habits/{id}/complete` - Marcar completado
-  - GET `/habits/stats` - Estadísticas
+- [ ] **Mecánicas avanzadas**
+  - Sistema de logros
+  - Títulos desbloqueables
+  - Combates aleatorios (Caronte Dice)
 
-- [ ] `src/api/routers/tasks.py` (45 min)
-  - GET `/tasks` - Lista con filtros
-  - GET `/tasks/{id}` - Detalle
-  - POST `/tasks` - Crear
-  - PUT `/tasks/{id}` - Actualizar
-  - DELETE `/tasks/{id}` - Eliminar
-  - POST `/tasks/{id}/complete` - Completar
-  - GET `/tasks/overdue` - Vencidas
-  - GET `/tasks/stats` - Estadísticas
-
-- [ ] `src/api/routers/events.py` (30 min)
-  - GET `/events` - Lista con filtros
-  - GET `/events/{id}` - Detalle
-  - POST `/events` - Crear
-  - PUT `/events/{id}` - Actualizar
-  - DELETE `/events/{id}` - Eliminar
-  - GET `/events/today` - De hoy
-
-- [ ] `src/api/routers/rpg.py` (1h)
-  - GET `/rpg/profile` - Perfil usuario
-  - POST `/rpg/xp` - Añadir XP
-  - POST `/rpg/wyrd` - Modificar Wyrd
-  - POST `/rpg/coins` - Añadir monedas
-  - GET `/rpg/market` - Artefactos disponibles
-  - POST `/rpg/market/{id}/buy` - Comprar artefacto
-  - GET `/rpg/artifacts` - Artefactos usuario
-  - POST `/rpg/dice-roll` - Tirada dados nocturna
-
-- [ ] `src/api/routers/dashboard.py` (30 min)
-  - GET `/dashboard` - Resumen completo
-  - GET `/dashboard/today` - Resumen hoy
-  - GET `/dashboard/week` - Resumen semana
-
-### Tests
-
-- [ ] Tests de endpoints (30 min)
-  - Test CRUD básico cada router
-  - Test errores comunes
-  - Test autenticación (si aplica)
-
-**Tiempo total estimado:** 4h 30min
+### Integraciones
+- [ ] **Google Calendar Sync**
+  - OAuth2 setup
+  - Import eventos
+  - Export eventos
+  - Sync bidireccional
 
 ---
 
-## 🎲 PRIORIDAD 4: Sistema de Dados (2h)
+## 🟢 PRIORIDAD BAJA (Backlog)
 
-**Estado:** ⏳ PENDIENTE  
-**Requiere:** Bugs críticos arreglados + API funcionando
+### Backend
+- [ ] Sistema de tags para tareas
+- [ ] Subtareas (checklist dentro de tarea)
+- [ ] Notas en eventos
+- [ ] Prioridad dinámica (urgente/importante)
+- [ ] Estimación de tiempo por tarea
 
-### Tareas
+### Frontend
+- [ ] Vista Kanban para tareas
+- [ ] Vista semanal calendario
+- [ ] Dashboard personalizable (widgets)
+- [ ] Exportar datos (JSON/CSV)
+- [ ] Importar desde Todoist/Notion
 
-- [ ] Integrar `caronte_dice.py` en API (1h)
-  - Endpoint `POST /rpg/end-of-day`
-  - Calcular hábitos completados
-  - Calcular tareas completadas
-  - Llamar `daily_dice_roll()`
-  - Devolver resultado con animación
+### Bot Telegram
+- [ ] Inline queries
+- [ ] Botones interactivos avanzados
+- [ ] Grupos (gestión compartida)
+- [ ] Comandos de voz
 
-- [ ] Sistema de indulgencias (1h)
-  - Endpoint `POST /rpg/indulgencia/prevention`
-  - Endpoint `POST /rpg/indulgencia/absolution`
-  - Validar costes
-  - Registrar en logs
-  - Actualizar Wyrd
-
-**Tiempo total estimado:** 2h
-
----
-
-## 🎨 PRIORIDAD 5: FASE 3 - Frontend (8-12h)
-
-**Estado:** ⏳ PENDIENTE  
-**Requiere:** API completamente funcional
-
-### Componentes
-
-- [ ] Dashboard principal (2h)
-  - Resumen diario
-  - Hábitos pendientes
-  - Tareas de hoy
-  - Eventos próximos
-  - Perfil RPG
-
-- [ ] Gestión hábitos (2h)
-  - Lista con filtros
-  - Formulario crear/editar
-  - Marcar completado
-  - Ver estadísticas
-
-- [ ] Gestión tareas (2h)
-  - Lista con filtros
-  - Formulario crear/editar
-  - Cambiar estado
-  - Ver vencidas
-
-- [ ] Gestión eventos (1h)
-  - Calendario
-  - Lista eventos
-  - Formulario crear/editar
-
-- [ ] Mercado RPG (2h)
-  - Lista artefactos disponibles
-  - Comprar artefactos
-  - Ver artefactos usuario
-  - Equipar/desequipar
-
-- [ ] Animación dados (2h)
-  - Interfaz tirada nocturna
-  - Animación dados 3D
-  - Mostrar combos
-  - Mostrar recompensas
-
-- [ ] Sistema indulgencias (1h)
-  - Botones prevención/absolución
-  - Confirmación costes
-  - Animación efectos
-
-**Tiempo total estimado:** 12h
+### Móvil
+- [ ] PWA (Progressive Web App)
+- [ ] App nativa React Native
+- [ ] Notificaciones push
+- [ ] Modo offline
 
 ---
 
-## 🤖 PRIORIDAD 6: Bot Telegram (4-6h)
+## ✅ COMPLETADO (8 Mar 2026)
 
-**Estado:** ⏳ PENDIENTE  
-**Requiere:** API funcionando
+### Backend
+- [x] API REST completa con FastAPI
+- [x] Base de datos SQLite + SQLAlchemy
+- [x] Modelos de datos (8 core + 13 RPG)
+- [x] CRUD completo tareas/hábitos/eventos
+- [x] Sistema RPG (XP, niveles, oro, artefactos)
+- [x] Chat IA con Groq
+- [x] Sistema de Indulgencias
+- [x] Caronte Dice System
+- [x] Todos los endpoints funcionando
+- [x] `run.py` launcher
+- [x] `init_db.py` con seed
 
-### Comandos
+### Frontend
+- [x] Dashboard HTML básico
+- [x] Tailwind CSS integrado
+- [x] Conexión con API (Fetch)
+- [x] Lista tareas con checkboxes
+- [x] Lista hábitos con botón completar
+- [x] Lista eventos del día
+- [x] Stats RPG en tiempo real
+- [x] Responsive básico
 
-- [ ] `/start` - Bienvenida
-- [ ] `/habits` - Ver hábitos pendientes
-- [ ] `/tasks` - Ver tareas de hoy
-- [ ] `/events` - Ver eventos de hoy
-- [ ] `/profile` - Ver perfil RPG
-- [ ] `/market` - Ver mercado
-- [ ] `/roll` - Tirada dados manual
+### Documentación
+- [x] README.md completo
+- [x] STATUS.md actualizado
+- [x] CHANGELOG.md con v1.5.0
+- [x] QUICKSTART.md
+- [x] TODO.md (este archivo)
+- [x] ROADMAP.md
+- [x] BUGS.md
+- [x] diary/2026-03-08.md
 
-### Notificaciones
-
-- [ ] Recordatorios tareas
-- [ ] Recordatorios eventos
-- [ ] Notificación game over
-- [ ] Notificación level up
-
-**Tiempo total estimado:** 5h
-
----
-
-## 📊 RESUMEN DE PRIORIDADES
-
-| Prioridad | Nombre | Tiempo | Estado |
-|-----------|--------|--------|--------|
-| 🔴 P1 | Bugs Críticos | 1-2h | ⏳ Pendiente |
-| 🟡 P2 | Issues Medios | 2-3h | ⏳ Pendiente |
-| 🚀 P3 | API REST | 3-4h | ⏳ Pendiente |
-| 🎲 P4 | Dados | 2h | ⏳ Pendiente |
-| 🎨 P5 | Frontend | 8-12h | ⏳ Pendiente |
-| 🤖 P6 | Bot Telegram | 4-6h | ⏳ Pendiente |
-| **TOTAL** | | **20-30h** | |
-
----
-
-## 🎯 PLAN DE EJECUCIÓN RECOMENDADO
-
-### Semana 1
-- **Día 1:** P1 - Bugs críticos (1-2h)
-- **Día 2:** P2 - Issues medios (2-3h)
-- **Día 3-4:** P3 - API REST (3-4h)
-- **Día 5:** P4 - Dados (2h)
-
-### Semana 2
-- **Día 1-3:** P5 - Frontend (8-12h)
-- **Día 4-5:** P6 - Bot Telegram (4-6h)
-- **Día 6:** Testing e integración
-- **Día 7:** Documentación final
+### Deploy
+- [x] Desplegado en Ubuntu (WSL2)
+- [x] API corriendo en localhost:8000
+- [x] Tests manuales OK
 
 ---
 
-## 📝 NOTAS
+## 🎯 HITOS (Milestones)
 
-- Prioridades pueden cambiar según necesidades
-- Tiempos son estimaciones, pueden variar
-- Cada tarea debe tener tests asociados
-- Documentar cambios en CHANGELOG.md
-- Actualizar STATUS.md tras cada sesión
+### v1.6.0 - Frontend Completo (Target: 15 Mar 2026)
+- [ ] Calendario FullCalendar funcionando
+- [ ] Dashboard mejorado con filtros
+- [ ] Gráficos de stats
+- [ ] Tema visual pulido
+
+### v2.0.0 - Bot Telegram (Target: 22 Mar 2026)
+- [ ] Bot completamente funcional
+- [ ] Comandos completos
+- [ ] Notificaciones automáticas
+- [ ] Gestión completa desde móvil
+
+### v2.5.0 - RPG Avanzado (Target: 5 Abr 2026)
+- [ ] Sistema de logros
+- [ ] Combates aleatorios
+- [ ] Marketplace visual
+- [ ] Historia épica Caronte
+
+### v3.0.0 - Integraciones (Target: 20 Abr 2026)
+- [ ] Google Calendar sync
+- [ ] Importar/exportar datos
+- [ ] Webhooks
+- [ ] API pública
 
 ---
 
-**Última actualización:** 07/03/2026 22:15 CET  
-**Próxima revisión:** Tras completar P1 (Bugs críticos)
+## 📋 TAREAS TÉCNICAS
+
+### Testing
+- [ ] Tests unitarios (pytest)
+- [ ] Tests de integración
+- [ ] Tests E2E (Playwright)
+- [ ] Coverage > 80%
+
+### DevOps
+- [ ] CI/CD con GitHub Actions
+- [ ] Deploy automático
+- [ ] Docker containerization
+- [ ] Monitoring (logs)
+
+### Seguridad
+- [ ] Rate limiting API
+- [ ] Autenticación JWT
+- [ ] Cifrado de datos sensibles
+- [ ] Backup automático DB
+
+### Performance
+- [ ] Cacheo con Redis
+- [ ] Optimización queries SQL
+- [ ] Lazy loading frontend
+- [ ] Compresión assets
+
+---
+
+## 💡 IDEAS FUTURAS
+
+- Modo multijugador (competir con amigos)
+- Integración con smartwatch
+- Asistente de voz (Siri/Google)
+- Gamificación avanzada (gremios, batallas)
+- Marketplace de plugins
+- Temas personalizables
+- IA predictiva (sugerir tareas)
+- Análisis de productividad con ML
+
+---
+
+**Última revisión:** 8 Marzo 2026
