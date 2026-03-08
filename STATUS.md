@@ -1,224 +1,314 @@
-# 📊 ESTADO DEL PROYECTO - Life Assistant V4
+# 📊 Life Assistant V4 - Estado Actual
 
-> Última actualización: 07/03/2026 21:00 CET
+**Última actualización:** 8 Marzo 2026, 16:40 CET  
+**Versión:** 1.5.0  
+**Estado general:** 🟫 FUNCIONAL - Backend 100% | Frontend Básico
 
-## 🎉 FASE 1 COMPLETADA AL 100%
+---
 
-### ✅ Lo que se ha creado (07/03/2026)
+## 🚀 Resumen Ejecutivo
 
-#### 📁 Estructura del Proyecto
+✅ **Backend API**: Completamente funcional y desplegado en Ubuntu (WSL2)  
+✅ **Base de datos**: SQLite inicializada con 12 artefactos míticos  
+🚧 **Frontend**: Dashboard HTML básico operativo  
+🔴 **Bot Telegram**: No iniciado aún  
 
+**Acceso:**
+- API Docs: http://localhost:8000/docs
+- Frontend: `frontend/index.html`
+- Base de datos: `data/life.db`
+
+---
+
+## 🟢 Componentes Completados
+
+### Backend Core (✅ 100%)
+
+#### API REST
+- [x] FastAPI application running
+- [x] Uvicorn server configured
+- [x] CORS enabled
+- [x] Swagger/OpenAPI docs
+- [x] Health check endpoint
+
+#### Base de Datos
+- [x] SQLite configurado
+- [x] SQLAlchemy ORM
+- [x] Modelos de datos definidos
+- [x] Relaciones entre tablas
+- [x] Script de inicialización (`init_db.py`)
+- [x] 12 artefactos míticos insertados
+
+#### Endpoints - Tareas (✅ 100%)
+- [x] `GET /tasks/` - Listar
+- [x] `POST /tasks/` - Crear
+- [x] `GET /tasks/{id}` - Ver
+- [x] `PUT /tasks/{id}` - Actualizar
+- [x] `DELETE /tasks/{id}` - Eliminar
+- [x] `POST /tasks/{id}/complete` - Completar
+- [x] `POST /tasks/{id}/uncomplete` - Descompletar
+- [x] `GET /tasks/stats/today` - Estadísticas
+- [x] `GET /tasks/overdue` - Vencidas
+
+#### Endpoints - Hábitos (✅ 100%)
+- [x] `GET /habits/` - Listar
+- [x] `POST /habits/` - Crear
+- [x] `GET /habits/{id}` - Ver
+- [x] `PUT /habits/{id}` - Actualizar
+- [x] `DELETE /habits/{id}` - Eliminar
+- [x] `POST /habits/{id}/complete` - Completar
+- [x] `GET /habits/{id}/logs` - Historial
+- [x] `GET /habits/stats/today` - Estadísticas
+
+#### Endpoints - Eventos (✅ 100%)
+- [x] `GET /events/` - Listar
+- [x] `POST /events/` - Crear
+- [x] `GET /events/{id}` - Ver
+- [x] `PUT /events/{id}` - Actualizar
+- [x] `DELETE /events/{id}` - Eliminar
+- [x] `GET /events/calendar/month` - Vista mensual
+- [x] `GET /events/upcoming` - Próximos
+
+#### Endpoints - RPG (✅ 100%)
+- [x] `GET /rpg/profile` - Perfil completo
+- [x] `POST /rpg/end-of-day` - Cálculo diario
+- [x] `POST /rpg/bad-habit` - Mal hábito
+- [x] `GET /rpg/indulgencia/coste` - Costes
+- [x] `POST /rpg/indulgencia/prevencion` - Prevención
+- [x] `POST /rpg/indulgencia/absolucion` - Absolución
+- [x] `POST /rpg/indulgencia/usar` - Usar
+- [x] `GET /rpg/market` - Mercado
+- [x] `GET /rpg/artifacts` - Inventario
+
+#### Endpoints - Chat (✅ 100%)
+- [x] `POST /chat/message` - Enviar
+- [x] `GET /chat/history` - Historial
+- [x] `DELETE /chat/history` - Limpiar
+- [x] `GET /chat/status` - Estado
+
+### Sistema RPG (✅ 100%)
+
+#### Mecánicas Core
+- [x] Cálculo de XP por tareas/hábitos
+- [x] Sistema de niveles (sqrt(XP/100))
+- [x] Generación de oro (óbolos)
+- [x] HP (salud) tracking
+- [x] Penalizaciones por malos hábitos
+
+#### Artefactos
+- [x] 12 artefactos míticos creados
+- [x] 3 raridades: Common, Rare, Legendary
+- [x] Sistema de compra con oro
+- [x] Bonificaciones aplicadas
+- [x] Inventario de usuario
+
+#### Sistema de Indulgencias
+- [x] Prevención (25 óbolos)
+- [x] Absolución (50 óbolos)
+- [x] Uso de indulgencias
+- [x] Cálculo de costes
+
+#### Caronte Dice System
+- [x] Sistema de dados mitológicos
+- [x] Probabilidades configurables
+- [x] Eventos aleatorios
+- [x] Rewards/penalties
+
+### Chat IA (✅ 100%)
+- [x] Integración con Groq (llama-3.3-70b-versatile)
+- [x] Contexto de usuario
+- [x] Historial de conversación
+- [x] Respuestas contextuales
+
+---
+
+## 🟡 Componentes en Progreso
+
+### Frontend (🚧 30%)
+
+#### Dashboard HTML (✅ Completo)
+- [x] Estructura básica HTML
+- [x] Estilos con Tailwind CSS
+- [x] Conexión con API
+- [x] Vista de tareas
+- [x] Vista de hábitos
+- [x] Vista de eventos
+- [x] Stats RPG
+
+#### Pendientes
+- [ ] Calendario avanzado (FullCalendar.js)
+- [ ] Gráficos de estadísticas
+- [ ] Drag & drop de tareas
+- [ ] Tema mitológico visual completo
+- [ ] Animaciones y transiciones
+- [ ] Modo oscuro/claro
+- [ ] Responsive mejorado
+
+---
+
+## 🔴 Componentes No Iniciados
+
+### Bot Telegram (0%)
+- [ ] Configuración de bot
+- [ ] Comandos básicos
+- [ ] Notificaciones push
+- [ ] Gestión de tareas desde bot
+- [ ] Consultas de stats
+
+### Integraciones (0%)
+- [ ] Google Calendar sync
+- [ ] Notion integration
+- [ ] Todoist import/export
+
+### Avanzado (0%)
+- [ ] Sistema de logros
+- [ ] Modo multijugador
+- [ ] App móvil nativa
+- [ ] PWA (Progressive Web App)
+
+---
+
+## 📊 Métricas Actuales
+
+### Código
+- **Líneas de código:** ~3,500
+- **Archivos Python:** 24
+- **Endpoints API:** 35+
+- **Modelos de datos:** 8
+
+### Base de Datos
+- **Tablas:** 10
+- **Artefactos precargados:** 12
+- **Tamaño DB inicial:** ~50 KB
+
+### Documentación
+- **Archivos MD:** 11
+- **README completo:** ✅
+- **API docs:** Auto-generada por FastAPI
+- **Comentarios en código:** ~20%
+
+---
+
+## 🔧 Configuración Actual
+
+### Entorno de Desarrollo
+- **OS:** Ubuntu 22.04 LTS (WSL2)
+- **Python:** 3.10
+- **Base de datos:** SQLite 3
+- **Editor:** VS Code
+
+### Dependencias Principales
 ```
-life-assistant-v4/
-├── README.md                     ✅ Documentación completa
-├── ROADMAP.md                    ✅ 24 tareas priorizadas
-├── CHANGELOG.md                  ✅ Historial de versiones
-├── STATUS.md                     ✅ Este archivo
-├── .gitignore                    ✅ Python, DB, logs
-├── .env.example                  ✅ Template variables
-├── requirements.txt              ✅ Dependencias Python
-├── init_db.py                    ✅ Script inicialización
-├── src/
-│   ├── __init__.py                ✅
-│   ├── config/
-│   │   ├── __init__.py            ✅
-│   │   └── settings.py            ✅ Configuración centralizada
-│   ├── core/
-│   │   ├── __init__.py            ✅ Exports completos
-│   │   ├── database.py            ✅ Conexión DB
-│   │   ├── models.py              ✅ Modelos core (8)
-│   │   ├── rpg_models.py          ✅ Modelos RPG (13)
-│   │   ├── dice_system.py         ✅ Sistema dados D&D
-│   │   └── utils.py               ✅ Funciones auxiliares
-│   ├── services/              ✅ MIGRADOS desde V3
-│   │   ├── __init__.py            ✅
-│   │   ├── habits.py              ✅ Service hábitos
-│   │   ├── tasks.py               ✅ Service tareas
-│   │   ├── events.py              ✅ Service eventos
-│   │   └── rpg.py                 ✅ Service RPG
-│   ├── api/                   🚧 FASE 2
-│   └── bot/                   🚧 FASE 4
-├── docs/
-│   ├── README.md                  ✅
-│   └── API.md                     ✅ Docs API REST
-├── static/
-│   ├── css/                       🚧 FASE 3
-│   ├── js/                        🚧 FASE 3
-│   └── img/                       ✅
-├── templates/                    🚧 FASE 3
-├── tests/
-│   ├── __init__.py                ✅
-│   └── test_database.py           ✅ Tests básicos DB
-└── data/                         ✅ (generado por init_db.py)
+fastapi==0.135.1
+uvicorn==0.41.0
+sqlalchemy==2.0.48
+alembic==1.18.4
+groq==1.0.0
+pydantic==2.12.5
+python-dotenv==1.2.2
+httpx==0.28.1
+```
+
+### Variables de Entorno Requeridas
+```
+DATABASE_URL=sqlite:///./data/life.db
+GROQ_API_KEY=gsk_...
+GROQ_MODEL=llama-3.3-70b-versatile
 ```
 
 ---
 
-## 📦 Archivos Creados
+## ✅ Funcionalidades Testeadas
 
-### 📋 Documentación (5 archivos)
-- `README.md`: Documentación completa del proyecto (400+ líneas)
-- `ROADMAP.md`: Plan de desarrollo con 24 tareas en 6 fases
-- `CHANGELOG.md`: Historial de versiones y cambios
-- `STATUS.md`: Este archivo
-- `docs/API.md`: Documentación API REST completa
+### Endpoints Verificados
+- [x] Health check
+- [x] Crear tarea
+- [x] Completar tarea
+- [x] Crear hábito
+- [x] Completar hábito
+- [x] Crear evento
+- [x] Ver perfil RPG
+- [x] Comprar artefacto
+- [x] Usar indulgencia
+- [x] Chat IA
 
-### ⚙️ Configuración (4 archivos)
-- `.gitignore`: Ignora Python, DB, logs, .env
-- `.env.example`: Template variables de entorno
-- `requirements.txt`: 25 dependencias Python
-- `src/config/settings.py`: Configuración centralizada desde .env
-
-### 🛠️ Core (6 archivos)
-- `src/core/database.py`: Conexión SQLite + SQLAlchemy
-- `src/core/models.py`: 8 modelos core (Habit, Task, Event, Diary, etc.)
-- `src/core/rpg_models.py`: 13 modelos RPG (UserProfile, XP, Wyrd, Artifacts, etc.)
-- `src/core/dice_system.py`: Sistema completo de dados D&D
-- `src/core/utils.py`: 7 funciones auxiliares compartidas
-- `src/core/__init__.py`: Exports completos de todos los módulos
-
-### 👼 Services (5 archivos) — ✅ MIGRADOS
-- `src/services/__init__.py`: Exports de servicios
-- `src/services/habits.py`: CRUD completo hábitos + rachas
-- `src/services/tasks.py`: CRUD tareas + vencidas + stats
-- `src/services/events.py`: CRUD eventos + recurrencia
-- `src/services/rpg.py`: Sistema Caronte completo (XP, Wyrd, Coins, Artifacts)
-
-### 🧪 Scripts y Tests (2 archivos)
-- `init_db.py`: Script inicialización DB + seed artefactos
-- `tests/test_database.py`: 5 tests básicos de conexión y modelos
-
-### 📁 Estructura (9 carpetas)
-- `src/`, `src/config/`, `src/core/`, `src/services/`, `src/api/`, `src/bot/`
-- `docs/`, `static/css/`, `static/js/`, `static/img/`, `templates/`, `tests/`, `data/`
-
-**TOTAL: 27 archivos creados + 13 carpetas**
+### Flujos Completos
+- [x] Crear usuario → Ver perfil
+- [x] Crear tarea → Completar → Ganar XP
+- [x] Crear hábito → Completar → Ganar oro
+- [x] Mal hábito → Perder HP
+- [x] Comprar indulgencia → Usar
+- [x] Comprar artefacto → Ver inventario
 
 ---
 
-## 📊 Progreso del Proyecto
+## 🐛 Issues Conocidos
 
-### FASE 1: Estructura Base - ✅ **100% COMPLETO**
+Ver [BUGS.md](BUGS.md) para lista completa.
 
-- [x] Crear carpetas V4 completas
-- [x] Crear archivos base (README, .gitignore, etc.)
-- [x] Migrar database.py → separar en models.py
-- [x] Crear config/settings.py centralizado
-- [x] Crear utils.py con funciones auxiliares
-- [x] Crear dice_system.py
-- [x] Crear init_db.py con seed de artefactos
-- [x] Crear tests básicos
-- [x] ✅ **Migrar services desde V3** (habits, tasks, events, rpg)
+### Críticos
+- Ninguno actualmente
 
-### FASE 2: API Web - **0% PENDIENTE**
+### Media Prioridad
+- Conflicto dependencias: httpx vs python-telegram-bot (resuelto usando httpx~=0.25.2)
 
-- [ ] Crear routers modulares (habits, tasks, events, rpg)
-- [ ] Refactorizar main.py
-- [ ] Endpoint /dashboard
-- [ ] Tests CRUD
-
-### FASE 3: Frontend Web - **0% PENDIENTE** 🔴 PRIORIDAD
-
-- [ ] HTML dashboard
-- [ ] CSS moderno
-- [ ] JavaScript fetch API
-- [ ] Vistas CRUD
-
-### FASE 4-6: Bot, RPG, Extras - **0% PENDIENTE**
+### Baja Prioridad
+- Frontend: No hay validación de formularios aún
+- Frontend: Mensajes de error genéricos
 
 ---
 
-## 🎯 Mejoras sobre V3
+## 📅 Próximos Pasos Inmediatos
 
-| Aspecto | V3 | V4 | Mejora |
-|---------|----|----|--------|
-| **Estructura** | Monolítica | Modular | 🟢 +100% |
-| **Database** | 1 archivo (500+ líneas) | 3 archivos separados | 🟢 +100% |
-| **Configuración** | Hardcoded | settings.py desde .env | 🟢 +100% |
-| **Services** | Sin separar | 4 services modulares | 🟢 +100% |
-| **Tests** | 0 | Tests básicos | 🟡 +50% |
-| **Docs** | README básico | README + ROADMAP + API + CHANGELOG | 🟢 +150% |
-| **Modelos** | Todo junto | Core + RPG separados | 🟢 +100% |
-| **Utils** | En database.py | utils.py independiente | 🟢 +100% |
+1. **Calendario FullCalendar** (Próxima sesión)
+   - Instalar FullCalendar.js
+   - Vista mensual interactiva
+   - Drag & drop de eventos
 
----
+2. **Bot Telegram** (Esta semana)
+   - Crear bot en BotFather
+   - Comandos básicos
+   - Notificaciones push
 
-## 🚀 Cómo Empezar
+3. **Tema Mitológico** (Siguiente semana)
+   - Diseño visual completo
+   - Iconos personalizados
+   - Animaciones temáticas
 
-### 1. Instalar dependencias
-
-```bash
-cd 03_proyectos/life-assistant-v4
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-### 2. Configurar .env
-
-```bash
-cp .env.example .env
-# Editar .env con tus credenciales
-```
-
-### 3. Inicializar base de datos
-
-```bash
-python init_db.py
-```
-
-### 4. Ejecutar tests
-
-```bash
-pytest tests/test_database.py -v
-```
+4. **Testing** (Continuo)
+   - Probar todos los endpoints
+   - Validar flujos completos
+   - Corregir bugs encontrados
 
 ---
 
-## 📋 Siguiente Paso
+## 🎯 Objetivos del Proyecto
 
-### 🔴 FASE 2: Crear API Web con FastAPI
+### Corto Plazo (1-2 semanas)
+- [ ] Frontend completo con calendario
+- [ ] Bot Telegram funcional
+- [ ] Primeros usuarios beta
 
-**Siguiente paso inmediato (2-3 horas)**:
+### Medio Plazo (1 mes)
+- [ ] Sistema de logros
+- [ ] Estadísticas avanzadas
+- [ ] Integración Google Calendar
 
-1. Crear `src/api/main.py` con app FastAPI
-2. Crear routers modulares:
-   - `src/api/routers/habits.py`
-   - `src/api/routers/tasks.py`
-   - `src/api/routers/events.py`
-   - `src/api/routers/rpg.py`
-   - `src/api/routers/dashboard.py`
-3. Probar endpoints con Swagger UI
-
-**O bien**: Extraer V4 a repo separado ahora y continuar allí
-
----
-
-## ✨ Resumen Ejecutivo
-
-🏆 **✅ FASE 1 COMPLETADA AL 100%**
-
-✅ **27 archivos creados** con estructura modular profesional  
-✅ **Core completo** (database, models, utils, dice_system)  
-✅ **Services migrados** desde V3 (habits, tasks, events, rpg)  
-✅ **Configuración** centralizada y profesional  
-✅ **Documentación** completa (README, ROADMAP, API, CHANGELOG)  
-✅ **Tests** básicos funcionando  
-
-🚧 **Falta**: API, Frontend, Bot (30-35 horas)
-
-🔥 **Estado**: 🟢 LISTO PARA FASE 2 o REPO SEPARADO
+### Largo Plazo (3 meses)
+- [ ] App móvil
+- [ ] Modo multijugador
+- [ ] Comunidad activa
 
 ---
 
-## 🔗 Links Útiles
+## 💬 Feedback & Contacto
 
-- **README**: [../README.md](README.md)
-- **ROADMAP**: [../ROADMAP.md](ROADMAP.md)
-- **CHANGELOG**: [../CHANGELOG.md](CHANGELOG.md)
-- **API Docs**: [../docs/API.md](docs/API.md)
-- **V3 (referencia)**: [../life-assistant-v3/](../life-assistant-v3/)
+Para reportar bugs o sugerir mejoras:
+- Crear issue en GitHub
+- Email: [tu-email]
+- Discord: [próximamente]
 
 ---
 
-**🌊 La Barca de Caronte está lista para zarpar... 🚪**
+**Última revisión:** 8 Marzo 2026  
+**Próxima actualización:** Después de completar Telegram Bot
